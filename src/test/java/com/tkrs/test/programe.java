@@ -128,9 +128,64 @@ public class programe {
     }
     /***
      * @Author wcg
-     * @Description 快速排序,
+     * @Description 快速排序,通过一趟排序将待排序记录分割成独立的两部分,其中一部分记录的关键字均比另一部分关键字小,
+     * 则分别对这两部分继续进行排序,直到整个序列有效
+     * 把整个序列看作一个数组,第0个位置看作中轴,和最后一个比,小则交换,大则不做任何处理,交换后再和小的那端比,小不交换,
+     * 大则交换,循环往复，一趟排序完成，左边就是比中轴小的，右边就是比中轴大的，然后再用分治法，分别对这两个独立的数组进行排序\
+     * 不稳定,多个相同的值的相对位置可能会在算法结束时产生变动
      * @Date 17:38 2018/8/18
      * @Param
      * @return
      **/
+    @Test
+    public void testOrder2(){
+        int[] numbers ={3,8,2,10,4,5,7,9,6,12,234,345,666,1,11,33,22,20};
+        //i=0,j=18-1=17,key=numbers[0]=3作为关键元素,从17开始向前搜索,找到第一个小的元素numbers[13]
+        // ,交换得到{1,8,2,10,4,5,7,9,6,12,234,345,666,3,11,33,22,20}
+        quickSort(numbers, 0, numbers.length-1);
+        System.out.println("======================");
+        Arrays.stream(numbers).forEach(System.out::println);
+        System.out.println(numbers.length);
+    }
+
+    /**
+     * @param numbers 带排序数组
+     * @param low  开始位置
+     * @param high 结束位置
+     */
+    public void quickSort(int[] numbers, int low, int high) {
+        if(low<high){
+            int middle = getMiddle(numbers,low,high); //将numbers数组进行一分为二
+            System.out.println(middle);
+            quickSort(numbers, low, middle-1);   //对低字段表进行递归排序
+            quickSort(numbers, middle+1, high); //对高字段表进行递归排序
+            System.out.println(numbers);
+        }
+    }
+
+    /**
+     * @param numbers  带查找数组
+     * @param low 开始位置
+     * @param high 结束位置
+     * @return  中轴所在位置
+     */
+    public int getMiddle(int[] numbers, int low, int high) {
+        int temp = numbers[low]; //数组的第一个作为中轴
+        while(low < high)
+        {
+            while(low < high && numbers[high] > temp)
+            {
+                high--;
+            }
+            numbers[low] = numbers[high];//比中轴小的记录移到低端
+            while(low < high && numbers[low] < temp)
+            {
+                low++;
+            }
+            numbers[high] = numbers[low] ; //比中轴大的记录移到高端
+        }
+        numbers[low] = temp ; //中轴记录到尾
+        return low ; // 返回中轴的位置
+    }
+
 }
