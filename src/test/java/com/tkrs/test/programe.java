@@ -133,13 +133,18 @@ public class programe {
      * 把整个序列看作一个数组,第0个位置看作中轴,和最后一个比,小则交换,大则不做任何处理,交换后再和小的那端比,小不交换,
      * 大则交换,循环往复，一趟排序完成，左边就是比中轴小的，右边就是比中轴大的，然后再用分治法，分别对这两个独立的数组进行排序\
      * 不稳定,多个相同的值的相对位置可能会在算法结束时产生变动
+     * 即假定数组第一个元素为中轴元素,分别从高位和低位开始与中轴元素比较,小的数值移到中轴左侧,大的数值移到中轴右侧,
+     * 再将第一个元素放入中轴位置,然后再递归对中轴两边的元素进行排序即可
+     * 快速排序是被认为在同数量级的排序方法中平均性能最好的,但当初始序列按关键码有序或基本有序时反而退化为冒泡排序,
+     * 通常以三者取中法选取基准记录,即将排序区间的两个端点与中点三个记录关键码居中的调整作为支点记录
+     * 快速排序是一个不稳定的排序方法
      * @Date 17:38 2018/8/18
      * @Param
      * @return
      **/
     @Test
     public void testOrder2(){
-        int[] numbers ={3,8,2,10,4,5,7,9,6,12,234,345,666,1,11,33,22,20};
+        int[] numbers ={3,8,2,10,4,5,7,9,6,12,234,345,666,1,11,33,22,20,1};
         //i=0,j=18-1=17,key=numbers[0]=3作为关键元素,从17开始向前搜索,找到第一个小的元素numbers[13]
         // ,交换得到{1,8,2,10,4,5,7,9,6,12,234,345,666,3,11,33,22,20}
         quickSort(numbers, 0, numbers.length-1);
@@ -156,10 +161,11 @@ public class programe {
     public void quickSort(int[] numbers, int low, int high) {
         if(low<high){
             int middle = getMiddle(numbers,low,high); //将numbers数组进行一分为二
-            System.out.println(middle);
+            System.out.print("middle:"+middle+"===>");
+            Arrays.stream(numbers).forEach(number->System.out.print(number+","));
+            System.out.println();
             quickSort(numbers, low, middle-1);   //对低字段表进行递归排序
             quickSort(numbers, middle+1, high); //对高字段表进行递归排序
-            System.out.println(numbers);
         }
     }
 
@@ -172,8 +178,8 @@ public class programe {
     public int getMiddle(int[] numbers, int low, int high) {
         int temp = numbers[low]; //数组的第一个作为中轴
         while(low < high)
-        {
-            while(low < high && numbers[high] > temp)
+        {//{3,8,2,10,4,5,7,9,6,12,234,345,666,1,11,33,22,20,1}
+            while(low < high && (numbers[high] > temp || numbers[high]==temp) )
             {
                 high--;
             }
@@ -188,4 +194,60 @@ public class programe {
         return low ; // 返回中轴的位置
     }
 
+    /***
+     * @Author wcg
+     * @Description 选择排序,在要排序的一组数中,选出最小的一个数与第一个位置的数交换,然后在剩下的数中再找最小的
+     * 与第二个位置的数交换,如此循环到倒数第二个数和最后一个数比较为止
+     * @Date 11:02 2018/8/22
+     * @Param
+     * @return
+     **/
+    @Test
+    public void testOrder3(){
+        int[] numbers={33,1,22,44,88,14};
+        int temp;//用于交换值的中间变量
+        for(int i=0;i<numbers.length;i++){
+            int k=i;//k用于表示记录第i个最小值的下标
+            for(int j = i; j < numbers.length ; j++){
+                if(numbers[j]<numbers[k]){
+                    k=j;
+                }
+            }
+            temp= numbers[i];
+            numbers[i]=numbers[k];
+            numbers[k]=temp;
+        }
+        Arrays.stream(numbers).forEach(number->System.out.print(number+","));
+    }
+    
+    /***
+     * @Author wcg
+     * @Description 插入排序,从第一个元素开始,此元素可以认为已经排序,取出下一个元素,在已经排序的元素序列中从后向前扫描
+     * 若该元素大于新元素,将该元素移到下一位置,一直重复,直到找到已排序的元素小于或者等于新元素的位置
+     * 将新元素插入到该位置中,一直重复即可
+     * @Date 14:09 2018/8/22
+     * @Param 
+     * @return 
+     **/
+    @Test
+    public void testOrder4(){
+        int[] numbers={45,23,77,1,89,9,5,99,3};
+        int temp,j;//用于交换的中间变量
+        for (int i=0;i<numbers.length;i++){
+            temp=numbers[i];
+            for(j=i;j>0 && temp < numbers[j-1];j--){
+                numbers[j]=numbers[j-1];
+            }
+            numbers[j]=temp;
+        }
+        Arrays.stream(numbers).forEach(number->System.out.print(number+","));
+    }
+
+    /***
+     * @Author wcg
+     * @Description   希尔算法
+     * @Date 18:58 2018/8/22
+     * @Param 
+     * @return 
+     **/
 }
