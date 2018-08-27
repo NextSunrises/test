@@ -203,7 +203,7 @@ public class programe {
      **/
     @Test
     public void testOrder3() {
-        int[] numbers = {1,33, 22, 44, 88, 14,110,2,3,4,1};
+        int[] numbers = {1, 33, 22, 44, 88, 14, 110, 2, 3, 4, 1};
         int temp;//用于交换值的中间变量
         for (int i = 0; i < numbers.length; i++) {
             int k = i;//k用于表示记录第i个最小值的下标
@@ -213,7 +213,7 @@ public class programe {
                 }
             }
             //若当前位置就是最小值,则无需交换
-            if(k==i){
+            if (k == i) {
                 continue;
             }
             temp = numbers[i];
@@ -248,7 +248,7 @@ public class programe {
 
     /***
      * @Author wcg
-     * @Description 希尔算法,先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序
+     * @Description 希尔算法, 先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序
      * 可以理解为加强版的插入排序,如将数组从大到小排列,先将数组进行分组,然后较大值移到前面,较小值移到后面,
      * 最后将整个数组进行插入排序,减少了数据交换和移动的次数
      * 以数组5, 2, 8, 9, 1, 3，4来说，数组长度为7,当increment为3时,数组分为两个序列
@@ -260,13 +260,13 @@ public class programe {
      * @return
      **/
     @Test
-    public void shellOrderTest(){
-        int[] array={2,6,1,888,4,3,5,99,33,55};
+    public void shellOrderTest() {
+        int[] array = {2, 6, 1, 888, 4, 3, 5, 99, 33, 55};
         shellSort(array);
         Arrays.stream(array).forEach(number -> System.out.print(number + ","));
     }
 
-    public static void shellSort(int[] data) {
+    public void shellSort(int[] data) {
         int j = 0;
         int temp = 0;
         //每次将步长缩短为原来的一半
@@ -286,4 +286,64 @@ public class programe {
         }
     }
 
+    @Test
+    public void testMergeSort(){
+        int[] array = {6, 2, 888, 1, 4, 3, 99, 5, 55, 33};
+        mergeSort(array,0,array.length-1);
+        Arrays.stream(array).forEach(number -> System.out.print(number + ","));
+    }
+    /**
+     * @return
+     * @Author wcg
+     * @Description 归并排序(Merge), 将两个或以上有序表合并成一个新的有序表, 即把待排序序列分为若干个子序列, 每个子序列都是有序的
+     * 再把有序子序列合并为整体有序序列
+     * @Date 14:18 2018/8/27
+     * @Param
+     **/
+    public void mergeSort(int[] nums, int low, int high) {
+        int mid = (low + high) / 2;
+        if (low < high) {
+            // 左边
+            mergeSort(nums, low, mid);
+            // 右边
+            mergeSort(nums, mid + 1, high);
+            // 左右归并
+            merge(nums, low, mid, high);
+        }
+    }
+
+    /**
+     * 将数组中low到high位置的数进行排序
+     * @param nums 待排序数组
+     * @param low  待排的开始位置
+     * @param mid  待排中间位置
+     * @param high 待排结束位置
+     */
+    public void merge(int[] nums, int low, int mid, int high) {
+        int[] temp = new int[high - low + 1];
+        int i = low;// 左指针
+        int j = mid + 1;// 右指针
+        int k = 0;
+        // 把较小的数先移到新数组中
+        while (i <= mid && j <= high) {
+            if (nums[i] < nums[j]) {
+                temp[k++] = nums[i++];
+            } else {
+                temp[k++] = nums[j++];
+            }
+        }
+        // 把左边剩余的数移入数组
+        while (i <= mid) {
+            temp[k++] = nums[i++];
+        }
+        // 把右边边剩余的数移入数组
+        while (j <= high) {
+            temp[k++] = nums[j++];
+        }
+        // 把新数组中的数覆盖nums数组
+        for (int k2 = 0; k2 < temp.length; k2++) {
+            nums[k2 + low] = temp[k2];
+        }
+    }
+    //堆排序有点复杂,后续有用上再研究
 }
