@@ -1,0 +1,40 @@
+#/target/ 过滤文件设置，表示过滤这个文件夹
+/target/
+/.idea/
+#过滤本文件
+*.iml
+.classpath
+.project
+.settings
+ ##filter databfile、sln file##
+*.mdb
+*.ldb
+*.sln
+##class file##
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+# compression file
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.via
+*.tmp
+*.err
+# OS generated files #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
