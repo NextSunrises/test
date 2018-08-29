@@ -287,11 +287,12 @@ public class programe {
     }
 
     @Test
-    public void testMergeSort(){
+        public void testMergeSort() {
         int[] array = {6, 2, 888, 1, 4, 3, 99, 5, 55, 33};
-        mergeSort(array,0,array.length-1);
+        mergeSort(array, 0, array.length - 1);
         Arrays.stream(array).forEach(number -> System.out.print(number + ","));
     }
+
     /**
      * @return
      * @Author wcg
@@ -345,5 +346,6 @@ public class programe {
             nums[k2 + low] = temp[k2];
         }
     }
-    //堆排序有点复杂,后续有用上再研究
+    //堆排序,基数排序有点复杂,后续有用上再研究
+
 }
