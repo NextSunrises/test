@@ -11,6 +11,8 @@ import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -280,5 +282,48 @@ public class Test123 {
         ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
         Thumbnails.of(new ByteArrayInputStream(oriBuffer))
                 .forceSize(200,200).toOutputStream(byteArrayOutputStream);
+    }
+    @Test
+    public void tttttttt() throws IOException {
+        byte[] b =Files.readAllBytes(Paths.get("E://img//123.jpg"));
+        String base64String = Base64.encodeBase64String(b);
+//        base64String="data:image/png;base64,"+base64String;
+        System.out.println("============="+base64String);
+        if(base64String.indexOf(",")>0){
+            base64String=base64String.substring(base64String.indexOf(",")+1,base64String.length());
+        }
+        final byte[] oriBuffer = Base64.decodeBase64(base64String);
+        long start = System.currentTimeMillis();
+        byte[] scaleBuffer = scaleImg(oriBuffer);
+        long end = System.currentTimeMillis();
+        System.out.println("======用时:"+(end-start)/1000);
+
+    }
+
+    private byte[] scaleImg(byte[] oriBuffer) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        byte[] byteArray = null;
+        try {
+            Thumbnails.of(new ByteArrayInputStream(oriBuffer)).forceSize(200, 200).toOutputStream(output);
+            byteArray = output.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                output.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return byteArray;
+    }
+
+    private static  final String sss="TEMP_";
+    @Test
+    public void test111(){
+        String str="TEMP_12312312312312";
+        String temp = str.replace(sss, "");
+        System.out.println(temp);
+        System.out.println(str);
     }
 }
