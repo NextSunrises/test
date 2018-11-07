@@ -240,7 +240,7 @@
     <build>
         <finalName>test</finalName>
         <resources>
-            <!--添加资源,强制将xml文件打到war包中-->
+            <!-- 添加资源,强制将xml文件打到war包中 -->
             <resource>
                 <directory>src/main/java</directory>
                 <includes>

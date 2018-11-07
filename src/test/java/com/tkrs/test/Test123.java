@@ -326,4 +326,21 @@ public class Test123 {
         System.out.println(temp);
         System.out.println(str);
     }
+
+    @Test
+    public void testGetAppKey() throws UnsupportedEncodingException {
+        String appKey="88291d60c75d6c8744fbdb8d";
+        String masterSecret="9c48d076d86021853560707c";
+        String str = appKey + ":" + masterSecret;
+        byte[] bytes = Base64.encodeBase64(str.getBytes("utf-8"));
+        String encodeStr=new String(bytes,"utf-8");
+        System.out.println("encodeStr====:"+encodeStr);
+    }
+
+    @Test
+    public  void testfileSize(){
+        String ss="123123123";
+        System.out.println(ss.substring(2,3));
+    }
+
 }
