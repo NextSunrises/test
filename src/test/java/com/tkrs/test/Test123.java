@@ -343,4 +343,75 @@ public class Test123 {
         System.out.println(ss.substring(2,3));
     }
 
+    @Test
+    public void fileTest() throws IOException {
+        File file= new File("E:\\work相关\\个案服务\\个案服务.zip");
+        byte[] bytes = fileToByteArray(file);
+        FileInputStream fileInputStream = byteToFile(bytes, "E:\\test\\个案服务.zip");
+        if(new File("E:\\test\\个案服务.zip").exists()){
+            new File("E:\\test\\个案服务.zip").delete();
+        }
+        System.out.println(fileInputStream.available());
+    }
+
+
+    public FileInputStream byteToFile(byte[] bytes, String fileName) {
+        File file = new File(fileName);
+        FileInputStream fileInputStream = null;
+        try {
+            OutputStream output = new FileOutputStream(file);
+            BufferedOutputStream bufferedOutput = new BufferedOutputStream(output);
+            bufferedOutput.write(bytes);
+            bufferedOutput.flush();
+            bufferedOutput.close();
+            fileInputStream = new FileInputStream(file);
+            boolean delete = file.delete();
+            file.deleteOnExit();
+            System.out.println("-======"+delete);
+            return fileInputStream;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileInputStream;
+    }
+
+    /**
+     * @Title: fileToByteArray
+     * @Description: 将文件转换为字节数组
+     * @param @return    参数
+     * @return byte[]    返回类型
+     * @throws
+     */
+    public static byte[] fileToByteArray(File ifile) {
+        FileInputStream fis = null;
+        ByteArrayOutputStream bos = null;
+        try {
+            fis = new FileInputStream(ifile);
+            bos = new ByteArrayOutputStream(1000);
+            byte[] b = new byte[1024];
+            int n;
+            while ((n = fis.read(b)) != -1) {
+                bos.write(b, 0, n);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+                if (bos != null) {
+                    bos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return bos.toByteArray();
+    }
+
 }

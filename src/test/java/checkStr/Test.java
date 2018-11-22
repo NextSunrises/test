@@ -112,4 +112,9 @@ public class Test {
         System.out.println("driverClassName======="+driverClassName);
         System.out.println("sss======="+sss);
     }
+
+    @org.junit.Test
+    public void ttt(){
+        File msgFile = new File("");
+    }
 }
