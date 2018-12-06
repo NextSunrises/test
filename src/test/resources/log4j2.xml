@@ -15,7 +15,7 @@ STATUS 该属性表示log4j2本身的日志信息打印级别,OFF表示关闭自
     <!--日志级别LEVEL从低到高分为TRACE->DEBUG->INFO->WARN->ERROR->FATAL -->
     <properties>
         <property name="LOG_HOME">E:/logs/</property>
-        <property name="FILE_NAME">front</property>
+        <property name="FILE_NAME">test</property>
     </properties>
     <!--先定义所有的appender-->
     <!--appender 可以理解为日志的输出目的地,console即为输出到控制台-->
