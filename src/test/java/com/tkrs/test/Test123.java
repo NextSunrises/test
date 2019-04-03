@@ -357,6 +357,7 @@ public class Test123 {
 
     public FileInputStream byteToFile(byte[] bytes, String fileName) {
         File file = new File(fileName);
+        int i = file.hashCode();
         FileInputStream fileInputStream = null;
         try {
             OutputStream output = new FileOutputStream(file);
@@ -412,6 +413,22 @@ public class Test123 {
             }
         }
         return bos.toByteArray();
+    }
+
+    @Test
+    public void isOdd(){
+        int i=-1;
+        System.out.println(i%2);
+        System.out.println(isOdd(i));
+    }
+
+    /**
+     * 判断是否为奇数
+     * @param i
+     * @return
+     */
+    public boolean isOdd(int i){
+        return i%2==1;
     }
 
 }
